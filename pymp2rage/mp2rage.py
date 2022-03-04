@@ -760,8 +760,12 @@ class MEMP2RAGE(MP2RAGE):
 
     def fit_t2star(self, min_t2star=0, max_t2star=300):
 
-        tmp = np.log(self.t2starw_echoes.get_data())
+        tmp = self.t2starw_echoes.get_data()
+        tmp = tmp/np.max(tmp)*4095
+        tmp = np.log(tmp)
         idx = (tmp > 0).all(-1)
+        
+        print("The size of an t2starw_echoes is: ", len(tmp))
 
         s0 = np.zeros(self.t2starw_echoes.shape[:3])
         t2star = np.zeros(self.t2starw_echoes.shape[:3])
